@@ -30,6 +30,9 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	void OnGUI(){
+		GUILayout.Box("Shitty placeholder UI");
+	}
 
 	/**
 	 * Message receivers for MobileHotpot
