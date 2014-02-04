@@ -3,14 +3,21 @@ using System.Collections;
 
 public class MobileHotspot : MonoBehaviour {
 	
-	public const string ENTERED = "OnHotspotEnter";
-	public const string EXITED = "OnHotspotExit";
-
 	void OnTriggerEnter (Collider col) {
-		if(col.tag == "Player") col.SendMessage(ENTERED, SendMessageOptions.DontRequireReceiver);
+		if(col.tag == "Player") GameController.instance.OnHotspotEnter();
 	}
 	
 	void OnTriggerExit (Collider col) {
-		if(col.tag == "Player") col.SendMessage(EXITED, SendMessageOptions.DontRequireReceiver);
+		if(col.tag == "Player") GameController.instance.OnHotspotExit();
+	}
+
+	private void OnDrawGizmos(){
+		if(collider && collider is SphereCollider){
+			float radius = (collider as SphereCollider).radius;
+			Gizmos.color = Color.red;
+			Gizmos.DrawWireSphere(transform.position, radius);
+			Gizmos.color = new Color(1f, 0.8f, 0.8f, 0.2f);
+			Gizmos.DrawSphere(transform.position, radius);
+		}
 	}
 }

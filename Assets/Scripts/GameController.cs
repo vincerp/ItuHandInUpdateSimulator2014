@@ -2,21 +2,24 @@
 using System.Collections;
 
 public class GameController : MonoBehaviour {
+	
+	public static GameController instance;
 
-	public WifiController wifiController;
+	private WifiController wifiController;
 
 	public float deadlineTime = 55f;
 
 	private bool isInHotspotArea = false;
 	public float internetReach = 10f;
 	public float downloadSpeedMultiplier = 1f;
+	public float distanceToChangeSpot = 2f;
 
 	public float uploadAmount = 0f;
 	public float uploadTotalSize = 100f;
 
-	IEnumerator Start(){
-		yield return new WaitForEndOfFrame();
-		wifiController = WifiController.instance;
+	void Start(){
+		instance = this;
+		wifiController = GetComponent<WifiController>();
 	}
 
 	void Update () {
@@ -25,13 +28,20 @@ public class GameController : MonoBehaviour {
 		deadlineTime -= Time.deltaTime;
 
 		if(dist <= internetReach && !isInHotspotArea){
-			//TODO: increment download speed
-			uploadAmount += ((dist*dist)/(internetReach*internetReach))*Time.deltaTime;
+			if(uploadAmount >= uploadTotalSize){
+				uploadAmount = uploadTotalSize;
+				return;
+			}
+			//TODO: verify if speed is good enough;
+			uploadAmount += ((dist*dist)/(internetReach*internetReach))*downloadSpeedMultiplier*Time.deltaTime;
+			if(dist <= distanceToChangeSpot) wifiController.ChangeActiveSignal();
 		}
 	}
 
 	void OnGUI(){
 		GUILayout.Box("Shitty placeholder UI");
+		GUILayout.Box("Distance: " + wifiController.GetDistanceFromSignal());
+		GUILayout.Box("Uploaded: " + uploadAmount);
 	}
 
 	/**
