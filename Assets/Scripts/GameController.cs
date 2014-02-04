@@ -3,13 +3,43 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	public WifiController wifiController;
+
+	public float deadlineTime = 55f;
+
+	private bool isInHotspotArea = false;
+	public float internetReach = 10f;
+	public float downloadSpeedMultiplier = 1f;
+
+	public float uploadAmount = 0f;
+	public float uploadTotalSize = 100f;
+
+	IEnumerator Start(){
+		yield return WaitForEndOfFrame();
+		wifiController = WifiController.instance;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
+		float dist = wifiController.GetDistanceFromSignal();
+
+		deadlineTime -= Time.deltaTime;
+
+		if(dist <= internetReach && !isInHotspotArea){
+			//TODO: increment download speed
+			uploadAmount += ((dist*dist)/(internetReach*internetReach))*Time.deltaTime;
+		}
+	}
+
+
+	/**
+	 * Message receivers for MobileHotpot
+	 */
+
+	public void OnHotspotEnter(){
+		if(!isInHotspotArea) isInHotspotArea = true;
+	}
+
+	public void OnHotspotExit(){
+		if(isInHotspotArea) isInHotspotArea = false;
 	}
 }

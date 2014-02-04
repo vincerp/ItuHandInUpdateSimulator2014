@@ -7,10 +7,10 @@ public class MobileHotspot : MonoBehaviour {
 	public const string EXITED = "OnHotspotExit";
 
 	void OnTriggerEnter (Collider col) {
-		col.SendMessage(ENTERED, SendMessageOptions.DontRequireReceiver);
+		if(col.tag == "Player") col.SendMessage(ENTERED, SendMessageOptions.DontRequireReceiver);
 	}
 	
 	void OnTriggerExit (Collider col) {
-		col.SendMessage(EXITED, SendMessageOptions.DontRequireReceiver);
+		if(col.tag == "Player") col.SendMessage(EXITED, SendMessageOptions.DontRequireReceiver);
 	}
 }
