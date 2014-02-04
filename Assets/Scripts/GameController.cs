@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour {
 	public float uploadTotalSize = 100f;
 
 	IEnumerator Start(){
-		yield return WaitForEndOfFrame();
+		yield return new WaitForEndOfFrame();
 		wifiController = WifiController.instance;
 	}
 
