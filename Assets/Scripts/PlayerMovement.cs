@@ -15,12 +15,12 @@ public class PlayerMovement : MonoBehaviour {
 
 		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.RIGHT))
 		{
-			rigidbody.trasform.rotation = Quaternion.Euler(Vector3.up*horizontalRotationSpeed);
+			rigidbody.transform.rotation = Quaternion.Euler(Vector3.up*horizontalRotationSpeed);
 		}
 
 		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.LEFT))
 		{
-			rigidbody.trasform.rotation = Quaternion.Euler(Vector3.up*(-horizontalRotationSpeed));
+			rigidbody.transform.rotation = Quaternion.Euler(Vector3.up*(-horizontalRotationSpeed));
 		}
 
 		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.UP))
