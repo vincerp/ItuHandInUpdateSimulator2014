@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour {
 	public float horizontalRotationSpeed = 1f;
 	public float verticalLaptopMovementSpeed = 1f;
 
+
+	void OnCollisionEnter(Collision col){
+
+	}
 	
 	void Update () {
 
