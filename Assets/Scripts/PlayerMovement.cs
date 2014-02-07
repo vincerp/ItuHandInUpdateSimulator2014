@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
-
+	
+	public float vel = 10f;
 	public float maxVel = 2f;
 	public float maxArmsH = 340;
 	public float minArmsH = 20;
@@ -11,23 +12,28 @@ public class PlayerMovement : MonoBehaviour {
 	public float horizontalRotationSpeed = 1f;
 	public float verticalLaptopMovementSpeed = 1f;
 
+	private float backTracking = 0f;
+	public float amountOfBacktrack = 0.5f;
 
 	void OnCollisionEnter(Collision col){
-
+		backTracking = amountOfBacktrack;
+		rigidbody.velocity = rigidbody.angularVelocity = Vector3.zero;
 	}
-	
+
 	void Update () {
 
 		//rigidbody.angularVelocity = Vector3.forward*forwardSpeed;
 
 		//transform.Translate(Vector3.forward * Time.deltaTime);
 
-		rigidbody.AddRelativeForce(0, 0, 10);
+		if(backTracking > 0f){
+			rigidbody.AddRelativeForce(0, 0, -vel);
+			backTracking -= Time.deltaTime;
+		} else {
+			rigidbody.AddRelativeForce(0, 0, vel);
+		}
+
 		rigidbody.velocity = Vector3.ClampMagnitude(rigidbody.velocity, maxVel);
-
-	
-
-
 
 
 		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.RIGHT))
