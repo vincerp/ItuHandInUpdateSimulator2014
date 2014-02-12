@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour {
 	public float horizontalRotationSpeed = 1f;
 	public float verticalLaptopMovementSpeed = 1f;
 
+	public float horizontalSpeedDump = 0.8f;
+
 	private float backTracking = 0f;
 	public float amountOfBacktrack = 0.5f;
 
@@ -38,15 +40,18 @@ public class PlayerMovement : MonoBehaviour {
 
 		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.RIGHT))
 		{
+			rigidbody.velocity *= horizontalSpeedDump;
 			rigidbody.MoveRotation(rigidbody.rotation*(Quaternion.Euler(Vector3.up*horizontalRotationSpeed)));
 		}
 
 		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.LEFT))
 		{
+			rigidbody.velocity *= horizontalSpeedDump;
 			rigidbody.MoveRotation(rigidbody.rotation*(Quaternion.Euler(Vector3.up*-horizontalRotationSpeed)));
 		}
 
-		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.UP))
+		//lagging infinitely...taking this away
+		/*if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.UP))
 		{
 			arms.Rotate(Vector3.right*-verticalLaptopMovementSpeed);
 			//if (arms.localEulerAngles.x > 340 || arms.localEulerAngles.x <= 0)
@@ -76,7 +81,7 @@ public class PlayerMovement : MonoBehaviour {
 		if(ChainJam.GetButtonPressed(ChainJam.PLAYER.PLAYER1,ChainJam.BUTTON.B))
 		{
 
-		}
+		}*/
 
 		 
 	}

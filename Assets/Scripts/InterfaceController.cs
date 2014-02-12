@@ -10,24 +10,36 @@ public class InterfaceController : MonoBehaviour {
 	public Renderer wifiSymbol; //the wifi bar
 	public Transform downloadBar;
 
+	Vector3 savedTransf;
+
+	void Start(){
+		savedTransf = downloadBar.localScale;
+	}
+
 	public void UpdateTimer(float timeRemaining){
 		timeRemaining = Mathf.Ceil(timeRemaining);
 
-		string txt = "00:"+timeRemaining;
+		if(timeRemaining<1f){
+			timeRemaining = 0f;
+			return;
+		}
+
+		string txt = "00:"+((timeRemaining<10)?"0"+timeRemaining:""+timeRemaining);
 
 		timerText.text = txt;
 	}
 
 	public void UpdateWifiSymbol(float currentDistance, float maxDistance){
-		float wifiPercent = 1-Mathf.Clamp01(currentDistance/maxDistance);
+		float wifiPercent = Mathf.Clamp01(currentDistance/maxDistance);
 
+		wifiSymbol.material.SetFloat("_Cutoff", wifiPercent);
 		//TODO: change shader here
 	}
 
 	public void UpdateDownloadBar(float currentUpload, float totalUpload){
 		float percent = currentUpload/totalUpload;
 
-		downloadBar.localScale = new Vector3(percent, 1f, 1f);
+		downloadBar.localScale = new Vector3(percent, savedTransf.y, savedTransf.z);
 	}
 
 	public void UploadFilesSent(int filesSent, int filesTotal){
